@@ -6,26 +6,16 @@
     <link rel="import" href="SiteDependencies.html" />
 </head>
 <body>
-
-
     <img id="picture" src="Assets/Deep_Space.jpg" />
-
     <div id="picture2">
-
-
-
-
         <img class="img-responsive" src="Assets/ney.png" />
     </div>
-
 
     <canvas id="inputCanvas" width="320" height="240" style="display:none"></canvas>
     <video id="inputVideo" autoplay loop style="display:none"></video>
     <script type="text/javascript">
 
-
         var getLocationBool = true;
-
         var OldCoords = { x: 0, y: 0 };
 
         setInterval(function () {
@@ -74,8 +64,6 @@
                     OldCoords = { x: event.x - 250, y: event.y - 200 };
                     getLocationBool = false;
                 }
-
-
 
             }
         }
