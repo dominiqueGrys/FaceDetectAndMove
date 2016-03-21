@@ -1,0 +1,18 @@
+﻿body {
+}
+
+#picture{
+    position:relative;
+    
+}
+
+#picture2{
+    top:60px;
+    left:300px;
+ position:absolute;
+ z-index:10;
+}
+
+#headtrackerMessageDiv{
+    visibility:collapse;
+}

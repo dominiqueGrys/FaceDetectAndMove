@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link rel="import" href="SiteDependencies.html" />
+</head>
+<body>
+
+
+    <img id="picture" src="Assets/Deep_Space.jpg" />
+
+    <div id="picture2">
+
+
+
+
+        <img class="img-responsive" src="Assets/ney.png" />
+    </div>
+
+
+    <canvas id="inputCanvas" width="320" height="240" style="display:none"></canvas>
+    <video id="inputVideo" autoplay loop style="display:none"></video>
+    <script type="text/javascript">
+
+
+        var getLocationBool = true;
+
+        var OldCoords = { x: 0, y: 0 };
+
+        setInterval(function () {
+
+            getLocationBool = true;
+            console.log("locating");
+        }, 400, false)
+
+
+        var videoInput = document.getElementById('inputVideo');
+        var canvasInput = document.getElementById('inputCanvas');
+
+        var htracker = new headtrackr.Tracker();
+        htracker.init(videoInput, canvasInput);
+        htracker.start();
+
+
+        document.addEventListener('facetrackingEvent',
+        function (event) {
+
+            if (getLocationBool == true) {
+
+                NewCoords = { x: (event.x - 250) * 1, y: (event.y - 200) * 1 };
+
+                if (NewCoords.x - OldCoords.x > 2 || NewCoords.x - OldCoords.x < -2) {
+
+                    var tween = new TWEEN.Tween(OldCoords)
+                    .to(NewCoords, 400)
+                    .onUpdate(function () {
+                    
+                        $("#picture").css({
+                            left: this.x + "px",
+                            top: this.y + "px"
+                        });
+                    
+                    })
+                    .start();
+
+                    requestAnimationFrame(animate);
+
+                    function animate(time) {
+                        requestAnimationFrame(animate);
+                        TWEEN.update(time);
+                    }
+
+                    OldCoords = { x: event.x - 250, y: event.y - 200 };
+                    getLocationBool = false;
+                }
+
+
+
+            }
+        }
+      );
+
+        $.fn.animateRotate = function (angle, duration, easing, complete) {
+            var args = $.speed(duration, easing, complete);
+            var step = args.step;
+            return this.each(function (i, e) {
+                args.complete = $.proxy(args.complete, e);
+                args.step = function (now) {
+                    $.style(e, 'transform', 'rotate(' + now + 'deg)');
+                    if (step) return step.apply(e, arguments);
+                };
+
+                $({ deg: 0 }).animate({ deg: angle }, args);
+            });
+        };
+
+        $("#picture2").animateRotate(360, 5000, 'linear', setInterval(function () {
+
+            $("#picture2").animateRotate(360, 5000, 'linear');
+        }, 5000, false));
+
+    </script>
+
+</body>
+</html>
